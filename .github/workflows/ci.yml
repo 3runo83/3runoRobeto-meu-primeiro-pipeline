@@ -1,0 +1,27 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verificar arquivo
+        run: |
+          test -f site/index.html
+
+      - name: Teste simples
+        run: |
+          grep -q "Deploy Automatizado" site/index.html
+
+      - name: Gerar artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-build
+          path: site/
